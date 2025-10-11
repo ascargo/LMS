@@ -13,7 +13,7 @@
         <div class="p-6 font-bold text-sunshine text-xl">📚 Library Admin</div>
         <nav class="px-4 space-y-2">
             <a href="{{ route('dashboard') }}" class="block px-3 py-2 rounded hover:bg-teal/20">Dashboard</a>
-            <a href="#" class="block px-3 py-2 rounded hover:bg-teal/20">Books</a>
+            <a href="{{ route('books.index') }}" class="block px-3 py-2 rounded hover:bg-teal/20">Books</a>
             <a href="#" class="block px-3 py-2 rounded hover:bg-teal/20">Patrons</a>
             <a href="#" class="block px-3 py-2 rounded hover:bg-teal/20">Borrowings</a>
         </nav>

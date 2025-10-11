@@ -1,3 +1,28 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    body {
+        @apply bg-primary text-soft font-sans;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        @apply font-heading text-accent;
+    }
+
+    a {
+        @apply text-accent hover:text-secondary transition;
+    }
+
+    input,
+    select,
+    textarea {
+        @apply text-primary border-gray-300 focus:border-secondary focus:ring-secondary;
+    }
+}
