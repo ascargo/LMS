@@ -19,10 +19,11 @@
         <div class="container mx-auto flex justify-between items-center py-4 px-6">
             <!-- Logo and brand -->
             <div class="flex items-center gap-3">
-                <img src="{{ asset('images/logo.png') }}" alt="Domus Libris logo" class="h-10 w-auto">
+                <img src="{{ asset('images/logo_acc2.png') }}" alt="Domus Libris logo"
+                class="h-20 w-auto mx-auto md:mx-0 mb-2">
                 <div>
                     <h1 class="font-heading text-xl font-bold leading-none text-accent">Domus Libris</h1>
-                    <p class="text-soft text-sm leading-tight">Where books find their place</p>
+                    <p class="text-white text-sm leading-tight">Where books find their place</p>
                 </div>
             </div>
 

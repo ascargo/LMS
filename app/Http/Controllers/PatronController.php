@@ -37,7 +37,8 @@ class PatronController extends Controller
 
         Patron::create($validated);
 
-        return redirect()->route('patron.request.thanks');
+        return redirect()->route('patron.request.thanks')
+        ->with('success', 'Your request has been sent! We will review it soon.');
     }
 
     /**

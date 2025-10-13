@@ -22,22 +22,21 @@
         </div>
 
         <!-- MIDDLE: Navigation -->
-        <nav class="flex-1 flex flex-col items-center gap-4 text-primary">
+        <nav class="flex flex-col gap-3 text-sunshine">
             @php
             $links = [
-            ['name' => 'Dashboard', 'route' => 'dashboard'],
-            ['name' => 'Books', 'route' => 'books.index'],
-            ['name' => 'Patrons', 'route' => 'patrons.index'],
-            ['name' => 'Borrowings', 'route' => 'borrowings.index'],
+            ['route' => 'dashboard', 'label' => 'Dashboard'],
+            ['route' => 'books.index', 'label' => 'Books'],
+            ['route' => 'patrons.index', 'label' => 'Patrons'],
+            ['route' => 'borrowings.index', 'label' => 'Borrowings'],
             ];
             @endphp
 
             @foreach ($links as $link)
             <a href="{{ route($link['route']) }}"
-                class="w-40 text-center px-4 py-2 rounded-lg border-2 border-accent text-accent font-medium 
-                 hover:bg-accent hover:text-primary transition
-                {{ request()->routeIs(Str::before($link['route'], '.') . '*') ? 'bg-accent text-primary font-semibold' : '' }}">
-                {{ $link['name'] }}
+                class="block px-4 py-2 rounded-lg border border-secondary bg-accent text-primary text-center font-medium hover:bg-accent hover:text-primary-dark transition
+                {{ request()->routeIs($link['route'] . '*') ? 'bg-accent text-primary font-semibold' : '' }}">
+                {{ $link['label'] }}
             </a>
             @endforeach
         </nav>
@@ -45,12 +44,10 @@
         <!-- BOTTOM: Logout + Footer -->
         <div class="mt-auto flex flex-col items-center">
             <!-- Logout -->
-            <form method="POST" action="{{ route('logout') }}" class="mb-4">
+            <form method="POST" action="{{ route('logout') }}" class="mt-auto mb-6 text-center">
                 @csrf
-                <button
-                    type="submit"
-                    class="px-6 py-2 rounded-lg bg-secondary text-white hover:bg-primary hover:text-accent 
-                    font-heading font-semibold shadow transition">
+                <button type="submit"
+                    class="px-4 py-2 w-full max-w-[160px] bg-accent text-primary font-semibold rounded-lg shadow hover:bg-primary hover:text-accent transition">
                     Logout
                 </button>
             </form>
