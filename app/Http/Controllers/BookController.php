@@ -49,11 +49,16 @@ class BookController extends Controller
     {
         $data = $request->validated();
 
-        if (!isset($data['status_id'])) {
-            $data['status_id'] = BookStatus::where('name', 'Available')->value('id');
+        if ($request->hasFile('cover')) {
+            $path = $request->file('cover')->store('covers', 'public');
+            $data['cover_path'] = $path;
         }
 
-        Book::create($data);
+        if (!isset($data['status_id'])) {
+            $data['status_id'] = \App\Models\BookStatus::where('name', 'Available')->value('id');
+        }
+
+        \App\Models\Book::create($data);
 
         return redirect()->route('books.index')
             ->with('success', 'Book created successfully.');
@@ -82,6 +87,13 @@ class BookController extends Controller
     public function update(UpdateBookRequest $request, Book $book)
     {
         $data = $request->validated();
+
+        // ✅ Handle new cover upload (optional)
+        if ($request->hasFile('cover')) {
+            $path = $request->file('cover')->store('covers', 'public');
+            $data['cover_path'] = $path;
+        }
+
         $book->update($data);
 
         return redirect()->route('books.index')

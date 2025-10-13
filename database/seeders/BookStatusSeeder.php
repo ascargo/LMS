@@ -13,8 +13,10 @@ class BookStatusSeeder extends Seeder
      */
     public function run(): void
     {
-        foreach (['Available', 'Borrowed', 'Reserved', 'Lost'] as $name) {
-            BookStatus::firstOrCreate(['name' => $name]);
+        $statuses = ['Available', 'Borrowed', 'Reserved', 'Lost'];
+
+        foreach ($statuses as $status) {
+            BookStatus::firstOrCreate(['name' => $status]);
         }
     }
 }
