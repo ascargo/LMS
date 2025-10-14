@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="scroll-smooth">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -20,7 +21,7 @@
             <!-- Logo and brand -->
             <div class="flex items-center gap-3">
                 <img src="{{ asset('images/logo_acc2.png') }}" alt="Domus Libris logo"
-                class="h-20 w-auto mx-auto md:mx-0 mb-2">
+                    class="h-20 w-auto mx-auto md:mx-0 mb-2">
                 <div>
                     <h1 class="font-heading text-xl font-bold leading-none text-accent">Domus Libris</h1>
                     <p class="text-white text-sm leading-tight">Where books find their place</p>
@@ -32,7 +33,12 @@
                 <a href="{{ route('home') }}" class="hover:text-secondary transition">Home</a>
                 <a href="{{ route('catalogue') }}" class="hover:text-secondary transition">Catalogue</a>
                 <a href="{{ route('about') }}" class="hover:text-secondary transition">About Us</a>
+
+                @auth
+                <a href="{{ route('owner.dashboard') }}" class="hover:text-secondary transition">Dashboard</a>
+                @else
                 <a href="{{ route('login') }}" class="hover:text-secondary transition">Login</a>
+                @endauth
             </nav>
         </div>
     </header>
@@ -50,4 +56,5 @@
         </div>
     </footer>
 </body>
+
 </html>
