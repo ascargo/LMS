@@ -15,7 +15,7 @@
 
         <!-- TOP: Logo -->
         <div class="text-center mb-10">
-            <a href="{{ route('dashboard') }}">
+            <a href="{{ route('owner.dashboard') }}">
                 <img src="{{ asset('images/logo_white.png') }}" alt="Domus Libris logo"
                     class="h-25 w-auto mx-auto hover:opacity-90 transition">
             </a>
@@ -25,7 +25,7 @@
         <nav class="flex flex-col gap-3 text-sunshine">
             @php
             $links = [
-            ['route' => 'dashboard', 'label' => 'Dashboard'],
+            ['route' => 'owner.dashboard', 'label' => 'Dashboard'],
             ['route' => 'books.index', 'label' => 'Books'],
             ['route' => 'patrons.index', 'label' => 'Patrons'],
             ['route' => 'borrowings.index', 'label' => 'Borrowings'],
