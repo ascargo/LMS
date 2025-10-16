@@ -16,23 +16,25 @@
 
 <body class="bg-primary text-soft font-sans antialiased flex flex-col min-h-screen">
     <!-- 🧭 Navbar -->
-    <header class="bg-primary text-accent shadow-soft">
+    <header class="bg-primary text-accent sticky top-0 z-50">
         <div class="container mx-auto flex justify-between items-center py-4 px-6">
             <!-- Logo and brand -->
-            <div class="flex items-center gap-3">
+            <a href="{{ route('home') }}" class="flex items-center gap-3 group">
                 <img src="{{ asset('images/logo_acc2.png') }}" alt="Domus Libris logo"
-                    class="h-20 w-auto mx-auto md:mx-0 mb-2">
+                    class="h-14 w-auto transition-transform group-hover:scale-105">
                 <div>
-                    <h1 class="font-heading text-xl font-bold leading-none text-accent">Domus Libris</h1>
-                    <p class="text-white text-sm leading-tight">Where books find their place</p>
+                    <h1 class="font-heading text-xl font-bold leading-none text-accent group-hover:text-secondary transition">
+                        Domus Libris
+                    </h1>
+                    <p class="text-soft text-sm leading-tight">Where books find their place</p>
                 </div>
-            </div>
+            </a>
 
-            <!-- Navigation links -->
-            <nav class="flex gap-6 font-heading text-base">
+            <!-- Navigation -->
+            <nav class="flex gap-6 font-heading text-base items-center">
                 <a href="{{ route('home') }}" class="hover:text-secondary transition">Home</a>
                 <a href="{{ route('catalogue') }}" class="hover:text-secondary transition">Catalogue</a>
-                <a href="{{ route('about') }}" class="hover:text-secondary transition">About Us</a>
+                <a href="{{ route('about') }}" class="hover:text-secondary transition">About</a>
 
                 @auth
                 <a href="{{ route('owner.dashboard') }}" class="hover:text-secondary transition">Dashboard</a>
@@ -42,6 +44,17 @@
             </nav>
         </div>
     </header>
+
+    <section class="bg-accent text-primary text-center py-3 shadow-inner">
+    <p class="font-heading text-base">
+        Love books and community?  
+        <a href="{{ route('patron.request') }}"
+           class="font-semibold text-secondary underline underline-offset-4 hover:text-primary transition">
+           Become a Patron
+        </a>
+        and join the shelves of Domus Libris.
+    </p>
+</section>
 
     <!-- 🌿 Main content -->
     <main class="flex-1">
