@@ -2,21 +2,51 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\BorrowingController;
+use App\Http\Controllers\PatronController;
+use App\Models\Book;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 //public views
 Route::view('/', 'home')->name('home');
 Route::view('/about', 'about')->name('about');
-Route::view('/catalogue', 'catalogue')->name('catalogue');
+Route::get('/catalogue', function (Request $request) {
+    $q = $request->string('q')->toString();
+
+    $books = Book::with('status')
+        ->when(
+            $q,
+            fn ($query) =>
+            $query->where(
+                fn ($sub) =>
+                $sub->where('title', 'like', "%$q%")
+                    ->orWhere('author', 'like', "%$q%")
+                    ->orWhere('isbn', 'like', "%$q%")
+            )
+        )
+        ->orderBy('title')
+        ->paginate(12)
+        ->withQueryString();
+
+    return view('catalogue', compact('books', 'q'));
+})->name('catalogue');
+
+// Public patron request form
+Route::view('/patron-request', 'patrons.request')->name('patron.request');
+Route::post('/patron-request', [App\Http\Controllers\PatronController::class, 'store'])
+    ->name('patron.request.store');
+Route::view('/patron-request/thanks', 'patrons.thanks')->name('patron.request.thanks');
 
 //authenticated views
-Route::view('/owner-dashboard', 'owner.dashboard')
-    ->middleware(['auth'])
+Route::get('/owner-dashboard', [DashboardController::class, 'index'])
+    ->middleware(['auth', 'verified'])
     ->name('owner.dashboard');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -26,5 +56,23 @@ Route::middleware(['auth', 'verified'])->group(function () {
     //Books CRUD
     Route::resource('books', BookController::class);
 });
+
+Route::middleware(['auth', 'verified'])->group(function () {
+    // Dashboard
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    // Books CRUD
+    Route::resource('books', BookController::class);
+
+    // Patrons management
+    Route::get('/patrons', [PatronController::class, 'index'])->name('patrons.index');
+    Route::get('/patrons/{patron}', [PatronController::class, 'show'])->name('patrons.show');
+    Route::patch('/patrons/{patron}/approve', [PatronController::class, 'approve'])->name('patrons.approve');
+    Route::delete('/patrons/{patron}', [PatronController::class, 'destroy'])->name('patrons.destroy');
+
+    // Borrowings management
+    Route::resource('borrowings', BorrowingController::class);
+});
+
 
 require __DIR__ . '/auth.php';

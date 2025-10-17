@@ -19,4 +19,9 @@ class Book extends Model
     {
         return $this->belongsTo(BookStatus::class, 'status_id');
     }
+
+    public function borrowings(): HasMany
+    {
+        return $this->hasMany(Borrowing::class);
+    }
 }

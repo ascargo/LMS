@@ -1,7 +1,7 @@
 <x-layouts.owner>
     <h1 class="text-2xl font-semibold text-sunshine mb-6">Edit Book</h1>
 
-    <form action="{{ route('books.update', $book) }}" method="POST" class="space-y-6">
+    <form action="{{ route('books.update', $book) }}" method="POST" enctype="multipart/form-data" class="space-y-6">
         @csrf @method('PUT')
         @include('books._form', ['book' => $book, 'statuses' => $statuses])
 
