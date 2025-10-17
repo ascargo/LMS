@@ -68,7 +68,7 @@
                 </div>
             </div>
             @empty
-            <p class="text-center text-accent text-lg font-heading mt-10">No books found - try another title or author.</p>
+            <p class="text-accent text-center text-lg font-heading mt-6">No books found.</p>
             @endforelse
         </div>
 

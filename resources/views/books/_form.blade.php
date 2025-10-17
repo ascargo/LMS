@@ -70,6 +70,7 @@
                     <option>Education</option>
                     <option>Science</option>
                     <option>Nature & Environment</option>
+                    <option>Sustainability</option>
                     <option>Technology</option>
                     <option>Health & Wellbeing</option>
                     <option>Self-Help</option>
@@ -151,6 +152,7 @@
                     <option>Workbook</option>
                     <option>Exhibition Catalogue</option>
                     <option>Catalog / Archive</option>
+                    <option>Moomin</option>
                     <option>Other (custom)</option>
                 </optgroup>
             </select>
@@ -190,9 +192,23 @@
 
         <div class="col-span-2">
             <x-input-label for="cover" value="Cover Image" />
-            <input id="cover" name="cover" type="file"
+
+            <input
+                id="cover"
+                name="cover"
+                type="file"
+                accept="image/*"
                 class="mt-1 block w-full text-gray-800 border-gray-300 focus:border-secondary focus:ring-secondary" />
+
+            @if(isset($book) && $book->cover_path)
+            <p class="mt-2 text-sm text-gray-600">
+                Current cover:
+                <img src="{{ asset('storage/' . $book->cover_path) }}" alt="Book cover" class="mt-1 h-32 rounded shadow">
+            </p>
+            @endif
+
             <x-input-error :messages="$errors->get('cover')" class="mt-2" />
         </div>
+
     </div>
 </div>

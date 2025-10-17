@@ -7,26 +7,7 @@ use Illuminate\Http\Request;
 
 class PatronController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        $patrons = Patron::orderBy('approved', 'desc')->orderBy('name')->paginate(10);
-        return view('patrons.index', compact('patrons'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
+    // Show the public patron request form
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -37,48 +18,37 @@ class PatronController extends Controller
 
         Patron::create($validated);
 
-        return redirect()->route('patron.request.thanks')
-        ->with('success', 'Your request has been sent! We will review it soon.');
+        return redirect()->route('patron.request.thanks');
     }
 
-    /**
-     * Display the specified resource.
-     */
+    // Show list of patrons in owner view
+    public function index()
+    {
+        $patrons = Patron::orderByDesc('created_at')->paginate(10);
+        return view('patrons.index', compact('patrons'));
+    }
+
+    // Show details of one patron
     public function show(Patron $patron)
     {
         return view('patrons.show', compact('patron'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Approve a patron (owner).
-     */
+    // Approve a pending patron
     public function approve(Patron $patron)
     {
         $patron->update(['approved' => true]);
-        return redirect()->route('patrons.index')->with('success', 'Patron approved successfully.');
+        return redirect()->route('patrons.index')->with('success', 'Patron approved.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+    // Delete a patron
     public function destroy(Patron $patron)
     {
+        if ($patron->borrowings()->exists()) {
+            return redirect()->route('patrons.index')
+                ->with('error', 'Cannot delete a patron with active borrowings.');
+        }
+
         $patron->delete();
         return redirect()->route('patrons.index')->with('success', 'Patron removed.');
     }

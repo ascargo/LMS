@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Patron extends Model
 {
@@ -14,6 +14,10 @@ class Patron extends Model
         'email',
         'message',
         'approved',
+    ];
+
+    protected $casts = [
+        'approved' => 'boolean',
     ];
 
     public function borrowings()
