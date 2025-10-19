@@ -41,12 +41,16 @@
             @forelse ($books as $book)
             <div class="bg-white rounded-xl shadow-soft overflow-hidden flex flex-col">
                 <div class="mb-4 h-56 rounded-lg overflow-hidden flex items-center justify-center bg-soft/40">
-                    @if ($book->cover_path)
-                    <img src="{{ asset('storage/' . $book->cover_path) }}" alt="{{ $book->title }} cover"
-                        class="object-cover w-full h-full">
+                    @if ($book->cover)
+                    <img src="{{ asset('storage/' . $book->cover) }}"
+                        alt="Cover of {{ $book->title }}"
+                        class="w-full max-w-xs rounded-xl shadow-md object-contain bg-white">
                     @else
-                    <span class="text-soft italic">No cover</span>
+                    <div class="w-full max-w-xs h-72 bg-gray-200 rounded-xl flex items-center justify-center text-gray-500 italic">
+                        No cover available
+                    </div>
                     @endif
+
                 </div>
 
                 <div class="p-4 flex-1 flex flex-col justify-between">
