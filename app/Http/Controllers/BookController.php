@@ -42,17 +42,30 @@ class BookController extends Controller
     {
         $data = $request->validated();
 
-        // ✅ Handle file upload
         if ($request->hasFile('cover')) {
-            $data['cover_path'] = $request->file('cover')->store('covers', 'public');
+            $data['cover'] = $request->file('cover')->store('covers', 'public');
         }
 
-        // Set default status if not provided
-        $data['status_id'] ??= BookStatus::where('name', 'Available')->value('id');
+        if (!isset($data['status_id'])) {
+            $data['status_id'] = \App\Models\BookStatus::where('name', 'Available')->value('id');
+        }
 
         Book::create($data);
 
         return redirect()->route('books.index')->with('success', 'Book created successfully.');
+    }
+
+    public function update(UpdateBookRequest $request, Book $book)
+    {
+        $data = $request->validated();
+
+        if ($request->hasFile('cover')) {
+            $data['cover'] = $request->file('cover')->store('covers', 'public');
+        }
+
+        $book->update($data);
+
+        return redirect()->route('books.index')->with('success', 'Book updated successfully.');
     }
 
     public function show(Book $book)
@@ -66,30 +79,11 @@ class BookController extends Controller
         return view('books.edit', compact('book', 'statuses'));
     }
 
-    public function update(UpdateBookRequest $request, Book $book)
-    {
-        $data = $request->validated();
-
-        // ✅ Handle cover replacement
-        if ($request->hasFile('cover')) {
-            // Delete old cover if exists
-            if ($book->cover_path && Storage::disk('public')->exists($book->cover_path)) {
-                Storage::disk('public')->delete($book->cover_path);
-            }
-
-            $data['cover_path'] = $request->file('cover')->store('covers', 'public');
-        }
-
-        $book->update($data);
-
-        return redirect()->route('books.index')->with('success', 'Book updated successfully.');
-    }
-
     public function destroy(Book $book)
     {
         // ✅ Delete cover file on book deletion
-        if ($book->cover_path && Storage::disk('public')->exists($book->cover_path)) {
-            Storage::disk('public')->delete($book->cover_path);
+        if ($book->cover && Storage::disk('public')->exists($book->cover)) {
+            Storage::disk('public')->delete($book->cover);
         }
 
         $book->delete();

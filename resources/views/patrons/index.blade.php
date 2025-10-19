@@ -14,12 +14,12 @@
         <!-- Card container -->
         <div class="bg-white rounded-2xl shadow-soft overflow-hidden">
             <table class="min-w-full text-primary">
-                <thead class="bg-accent text-primary uppercase text-sm font-heading tracking-wide border-b border-primary/10">
+                <thead class="bg-primary text-accent uppercase text-sm font-heading tracking-wide border-b border-primary/10">
                     <tr>
-                        <th class="text-left px-6 py-3">Name</th>
-                        <th class="text-left px-6 py-3">Email</th>
+                        <th class="text-center px-6 py-3">Name</th>
+                        <th class="text-center px-6 py-3">Email</th>
                         <th class="text-center px-6 py-3">Status</th>
-                        <th class="text-right px-6 py-3">Actions</th>
+                        <th class="text-center px-6 py-3">Actions</th>
                     </tr>
                 </thead>
 

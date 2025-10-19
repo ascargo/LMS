@@ -49,8 +49,8 @@
     <p class="font-heading text-base">
         Love books and community?  
         <a href="{{ route('patron.request') }}"
-           class="font-semibold text-secondary underline underline-offset-4 hover:text-primary transition">
-           Become a Patron
+        class="font-semibold text-secondary underline underline-offset-4 hover:text-primary transition">
+        Become a Patron
         </a>
         and join the shelves of Domus Libris.
     </p>

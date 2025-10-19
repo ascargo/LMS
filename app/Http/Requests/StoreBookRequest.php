@@ -22,8 +22,6 @@ class StoreBookRequest extends FormRequest
             'collection' => ['nullable', 'string', 'max:255'],
             'location' => ['nullable', 'string', 'max:255'],
             'status_id' => ['nullable', 'exists:book_statuses,id'],
-
-            // ✅ Image validation
             'cover' => ['nullable', 'file', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
         ];
     }

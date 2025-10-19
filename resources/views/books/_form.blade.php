@@ -200,15 +200,19 @@
                 accept="image/*"
                 class="mt-1 block w-full text-gray-800 border-gray-300 focus:border-secondary focus:ring-secondary" />
 
-            @if(isset($book) && $book->cover_path)
-            <p class="mt-2 text-sm text-gray-600">
-                Current cover:
-                <img src="{{ asset('storage/' . $book->cover_path) }}" alt="Book cover" class="mt-1 h-32 rounded shadow">
-            </p>
+            @if ($book->cover)
+            <img src="{{ asset('storage/' . $book->cover) }}"
+                alt="Cover of {{ $book->title }}"
+                class="w-full max-w-xs rounded-xl shadow-md object-contain bg-white">
+            @else
+            <div class="w-full max-w-xs h-72 bg-gray-200 rounded-xl flex items-center justify-center text-gray-500 italic">
+                No cover available
+            </div>
             @endif
 
             <x-input-error :messages="$errors->get('cover')" class="mt-2" />
         </div>
+
 
     </div>
 </div>
