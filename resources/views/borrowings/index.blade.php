@@ -1,81 +1,69 @@
 <x-layouts.owner>
-    <div class="flex items-center justify-between mb-6">
-        <h1 class="text-2xl font-heading text-sunshine font-bold">📖 Borrowings</h1>
-        <div class="flex items-center gap-3">
-            <form action="{{ route('borrowings.index') }}" method="GET" class="flex items-center gap-2">
-                <input type="text" name="q" placeholder="Search..."
-                    class="px-3 py-2 border rounded-lg text-sm focus:ring-secondary focus:border-secondary">
-            </form>
-            <a href="{{ route('borrowings.create') }}"
-                class="bg-secondary text-white px-4 py-2 rounded-lg shadow hover:bg-primary transition">
-                + Register Borrowing
-            </a>
+    <section class="max-w-6xl mx-auto px-6 py-10">
+        <h1 class="font-heading text-3xl text-accent mb-6">Borrowings</h1>
+
+        @if (session('success'))
+        <div class="bg-green-100 text-green-800 px-4 py-2 rounded-lg shadow-soft mb-6">
+            {{ session('success') }}
         </div>
-    </div>
+        @endif
 
-    <div class="overflow-x-auto bg-white rounded-xl shadow-soft">
-        <table class="min-w-full border-collapse">
-            <thead class="bg-primary text-accent uppercase text-sm font-semibold tracking-wide">
-                <tr>
-                    <th class="py-3 px-4 text-center">Patron</th>
-                    <th class="py-3 px-4 text-center">Book</th>
-                    <th class="py-3 px-4 text-center">Borrowed</th>
-                    <th class="py-3 px-4 text-center">Returned</th>
-                    <th class="py-3 px-4 text-center">Status</th>
-                    <th class="py-3 px-4 text-center">Actions</th>
-                </tr>
-            </thead>
+        <a href="{{ route('borrowings.create') }}"
+            class="bg-secondary text-white font-medium px-4 py-2 rounded-lg shadow hover:bg-primary hover:text-accent transition mb-6 inline-block">
+            + Register Borrowing
+        </a>
 
-            <tbody>
-                @forelse ($borrowings as $borrowing)
-                <tr class="hover:bg-accent/10 transition border-b">
-                    <td class="py-3 px-4 align-middle text-center">{{ $borrowing->patron->name }}</td>
-                    <td class="py-3 px-4 align-middle text-center">{{ $borrowing->book->title }}</td>
-                    <td class="py-3 px-4 align-middle text-center">{{ $borrowing->borrowed_at ? $borrowing->borrowed_at->format('Y-m-d') : '-' }}</td>
-                    <td class="py-3 px-4 align-middle text-center">{{ $borrowing->returned_at ? $borrowing->returned_at->format('Y-m-d') : '-' }}</td>
-                    <td class="py-3 px-4 align-middle text-center">
-                        @php
-                        $status = $borrowing->returned_at ? 'Returned' : 'Borrowed';
-                        $color = $borrowing->returned_at
-                        ? 'bg-green-100 text-green-700'
-                        : 'bg-yellow-100 text-yellow-700';
-                        @endphp
-                        <span class="px-2 py-1 rounded-full text-xs font-semibold {{ $color }}">
-                            {{ $status }}
-                        </span>
-                    </td>
-                    <td class="py-3 px-4 align-middle text-center">
-                        <div class="flex justify-center gap-2">
-                            <a href="{{ route('borrowings.show', $borrowing) }}"
-                                class="bg-secondary text-white px-3 py-1 rounded-lg text-sm hover:bg-primary transition shadow">
-                                View
-                            </a>
-                            @if(!$borrowing->returned_at)
-                            <form action="{{ route('borrowings.update', $borrowing) }}" method="POST" onsubmit="return confirm('Mark as returned?')">
-                                @csrf
-                                @method('PATCH')
-                                <input type="hidden" name="returned_at" value="{{ now() }}">
-                                <button type="submit"
-                                    class="border border-yellow-500 text-yellow-600 px-3 py-1 rounded-lg text-sm hover:bg-yellow-100 transition">
-                                    Return
-                                </button>
-                            </form>
-                            @endif
-                        </div>
-                    </td>
-                </tr>
-                @empty
-                <tr>
-                    <td colspan="6" class="py-6 text-center text-accent/70 italic">
-                        No borrowings found.
-                    </td>
-                </tr>
-                @endforelse
-            </tbody>
-        </table>
-    </div>
+        <div class="bg-white rounded-2xl shadow-soft overflow-hidden">
+            <table class="min-w-full text-primary">
+                <thead class="bg-accent text-primary uppercase text-sm font-heading tracking-wide border-b border-primary/10">
+                    <tr>
+                        <th class="text-left px-6 py-3">Book</th>
+                        <th class="text-left px-6 py-3">Patron</th>
+                        <th class="text-left px-6 py-3">Borrowed At</th>
+                        <th class="text-left px-6 py-3">Returned At</th>
+                        <th class="text-right px-6 py-3">Actions</th>
+                    </tr>
+                </thead>
 
-    <div class="mt-6">
-        {{ $borrowings->links() }}
-    </div>
+                <tbody class="divide-y divide-gray-200">
+                    @forelse ($borrowings as $b)
+                    <tr class="hover:bg-soft/10 transition">
+                        <td class="px-6 py-3">{{ $b->book->title ?? '—' }}</td>
+                        <td class="px-6 py-3">{{ $b->patron->name ?? '—' }}</td>
+                        <td class="px-6 py-3">{{ optional($b->borrowed_at)->format('M j, Y') ?? '—' }}</td>
+                        <td class="px-6 py-3">{{ optional($b->returned_at)->format('M j, Y') ?? '—' }}</td>
+                        <td class="px-6 py-3 text-right">
+                            <div class="flex justify-end gap-2">
+                                <a href="{{ route('borrowings.edit', $b) }}"
+                                    class="bg-secondary hover:bg-primary hover:text-accent text-white text-xs font-medium px-3 py-1 rounded-lg shadow transition">
+                                    ✏️ Edit
+                                </a>
+
+                                <form action="{{ route('borrowings.destroy', $b) }}" method="POST"
+                                    onsubmit="return confirm('Delete this borrowing?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit"
+                                        class="bg-red-100 hover:bg-red-200 text-red-700 text-xs font-medium px-3 py-1 rounded-lg shadow transition">
+                                        🗑️ Delete
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    @empty
+                    <tr>
+                        <td colspan="4" class="px-6 py-6 text-center text-soft italic">
+                            No borrowings found.
+                        </td>
+                    </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+
+        <div class="mt-8">
+            {{ $borrowings->links() }}
+        </div>
+    </section>
 </x-layouts.owner>
