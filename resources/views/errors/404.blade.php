@@ -24,7 +24,7 @@
 
         {{-- Button back home --}}
         <a href="{{ route('home') }}"
-           class="inline-flex items-center gap-2 bg-accent text-white px-6 py-3 rounded-full font-heading shadow-md hover:shadow-xl hover:bg-primary transition-all duration-200">
+        class="inline-flex items-center gap-2 bg-accent text-white px-6 py-3 rounded-full font-heading shadow-md hover:shadow-xl hover:bg-primary transition-all duration-200">
             🏠 Take me home
         </a>
 
