@@ -2,10 +2,6 @@
     <div class="flex items-center justify-between mb-6">
         <h1 class="text-2xl font-heading text-sunshine font-bold">📚 Books</h1>
         <div class="flex items-center gap-3">
-            <!-- Toggle View Placeholder -->
-            <button class="border border-secondary text-secondary px-4 py-2 rounded-lg hover:bg-secondary hover:text-white transition">
-                Toggle View
-            </button>
             <a href="{{ route('books.create') }}"
                 class="bg-secondary text-white px-4 py-2 rounded-lg shadow hover:bg-primary transition">
                 + Add Book
