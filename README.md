@@ -65,8 +65,13 @@ Expected result:
 INFO Running migrations.
 Database seeding completed successfully.
 
-5. (Optional) Install frontend dependencies
-   npm install && npm run dev
+🧰 5. (Optional) Install frontend dependencies
+npm install
+npm run build
+
+If you want to use hot reload for development:
+
+npm run dev
 
 ▶️ Execution
 
@@ -122,3 +127,11 @@ git commit -m "feat: add my new feature"
 git push origin feature/my-new-feature
 
 Then open a Pull Request on GitHub with a clear description.
+
+✅ Notes for Developers
+
+Never commit .env or database.sqlite files.
+
+Run npm audit fix regularly to keep dependencies secure.
+
+To test from a fresh clone: repeat installation steps 1–5 above.
