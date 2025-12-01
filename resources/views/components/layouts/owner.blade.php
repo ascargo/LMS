@@ -8,10 +8,28 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="bg-soft text-primary min-h-screen flex font-sans">
+<body class="bg-soft text-primary min-h-screen flex font-sans" x-data="{ open: false }">
+    <!-- Mobile header -->
+    <header class="md:hidden w-full bg-primary text-accent flex items-center justify-between px-4 py-3 shadow">
+        <div class="flex items-center gap-3">
+            <button @click="open = !open" class="p-2 rounded bg-accent/20 text-accent hover:bg-accent/30 transition">
+                <span x-show="!open">☰</span>
+                <span x-show="open">✕</span>
+            </button>
+            <a href="{{ route('owner.dashboard') }}" class="font-heading font-semibold">Domus Libris</a>
+        </div>
+        <a href="{{ route('logout') }}"
+            onclick="event.preventDefault(); this.closest('form').submit();"
+            class="text-sm underline hidden">
+            Logout
+        </a>
+    </header>
 
     <!-- Sidebar -->
-    <aside class="w-64 bg-primary text-accent min-h-screen p-6 flex flex-col justify-between shadow-soft">
+    <aside
+        class="w-64 bg-primary text-accent min-h-screen p-6 flex flex-col justify-between shadow-soft transition-transform duration-200
+               fixed inset-y-0 left-0 z-40 md:relative md:translate-x-0"
+        :class="open ? 'translate-x-0' : '-translate-x-full md:translate-x-0'">
 
         <!-- TOP: Logo -->
         <div class="text-center mb-10">
@@ -59,9 +77,11 @@
         </div>
     </aside>
 
+    <!-- Overlay for mobile -->
+    <div class="fixed inset-0 bg-black/40 z-30 md:hidden" x-show="open" @click="open = false"></div>
 
     <!-- Main content -->
-    <main class="flex-1 p-10 overflow-y-auto bg-soft">
+    <main class="flex-1 p-4 md:p-10 overflow-y-auto bg-soft md:ml-0 md:pl-72">
         {{ $slot }}
     </main>
 

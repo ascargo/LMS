@@ -1,5 +1,5 @@
 <x-layouts.owner>
-    <section class="max-w-4xl mx-auto px-6 py-10 space-y-8">
+    <section class="max-w-4xl mx-auto px-4 sm:px-6 py-10 space-y-8">
 
         <!-- Header -->
         <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">

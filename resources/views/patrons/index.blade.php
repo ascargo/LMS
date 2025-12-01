@@ -1,5 +1,5 @@
 <x-layouts.owner>
-    <section class="max-w-6xl mx-auto px-6 py-10">
+    <section class="max-w-6xl mx-auto px-4 sm:px-6 py-10">
         <!-- Header -->
         <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
             <h1 class="font-heading text-3xl text-accent">Patrons</h1>
@@ -9,6 +9,11 @@
                 {{ session('success') }}
             </div>
             @endif
+
+            <a href="{{ route('patrons.create') }}"
+                class="bg-secondary text-white font-medium px-4 py-2 rounded-lg shadow hover:bg-primary hover:text-accent transition w-full md:w-auto text-center">
+                + Add Patron
+            </a>
         </div>
 
         <!-- Card container -->

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Borrowing;
 use App\Models\Book;
 use App\Models\Patron;
+use App\Enums\BookStatusEnum;
 use Illuminate\Http\Request;
 
 class BorrowingController extends Controller
@@ -20,11 +21,13 @@ class BorrowingController extends Controller
 
     public function create()
     {
-        $books = Book::whereHas('status', function ($q) {
-            $q->whereNotIn('name', ['Borrowed', 'Reserved','Lost']);
-        })
-    ->orderBy('title')
-    ->get();
+        $books = Book::statusNotIn([
+            BookStatusEnum::Borrowed->value,
+            BookStatusEnum::Reserved->value,
+            BookStatusEnum::Lost->value,
+        ])
+            ->orderBy('title')
+            ->get();
 
         $patrons = Patron::where('approved', true)->orderBy('name')->get();
 
@@ -42,7 +45,9 @@ class BorrowingController extends Controller
 
         $borrowing = Borrowing::create($data);
 
-        $borrowing->book->update(['status_id' => \App\Models\BookStatus::where('name', 'Borrowed')->value('id')]);
+        $borrowing->book->update([
+            'status_id' => \App\Models\BookStatus::where('name', BookStatusEnum::Borrowed->value)->value('id')
+        ]);
 
         return redirect()->route('borrowings.index')->with('success', 'Borrowing created successfully.');
     }
@@ -65,7 +70,9 @@ class BorrowingController extends Controller
         $borrowing->update($data);
 
         if ($borrowing->returned_at) {
-            $borrowing->book->update(['status_id' => \App\Models\BookStatus::where('name', 'Available')->value('id')]);
+            $borrowing->book->update([
+                'status_id' => \App\Models\BookStatus::where('name', BookStatusEnum::Available->value)->value('id')
+            ]);
         }
 
         return redirect()->route('borrowings.index')->with('success', 'Borrowing updated.');

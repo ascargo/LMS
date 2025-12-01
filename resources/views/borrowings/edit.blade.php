@@ -1,5 +1,5 @@
 <x-layouts.owner>
-    <section class="max-w-3xl mx-auto px-6 py-10">
+    <section class="max-w-3xl mx-auto px-4 sm:px-6 py-10">
         <h1 class="font-heading text-3xl text-accent mb-6">Update Borrowing</h1>
 
         <div class="bg-accent rounded-2xl shadow-soft p-8 text-primary">
@@ -27,7 +27,7 @@
                 </div>
 
                 <!-- Dates grid -->
-                <div class="grid md:grid-cols-2 gap-6">
+                <div class="grid grid-cols-1 gap-6">
                     <div>
                         <x-input-label for="borrowed_at" value="Borrowed On" class="text-primary font-semibold" />
                         <x-text-input id="borrowed_at" name="borrowed_at" type="date"
@@ -47,7 +47,7 @@
                 </div>
 
                 <!-- Buttons -->
-                <div class="flex justify-end gap-3 pt-4">
+                <div class="flex flex-col sm:flex-row sm:justify-end gap-3 pt-4">
                     <a href="{{ route('borrowings.index') }}"
                         class="px-4 py-2 rounded-lg border border-primary/30 text-primary hover:bg-primary hover:text-accent transition">
                         Cancel

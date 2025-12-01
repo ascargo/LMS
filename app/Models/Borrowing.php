@@ -25,11 +25,11 @@ class Borrowing extends Model
     // Relationships
     public function book(): BelongsTo
     {
-        return $this->belongsTo(Book::class);
+        return $this->belongsTo(Book::class)->withDefault();
     }
 
     public function patron(): BelongsTo
     {
-        return $this->belongsTo(Patron::class);
+        return $this->belongsTo(Patron::class)->withDefault();
     }
 }

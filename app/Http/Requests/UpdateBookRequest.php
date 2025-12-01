@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Rules\Isbn;
 
 class UpdateBookRequest extends FormRequest
 {
@@ -16,7 +17,7 @@ class UpdateBookRequest extends FormRequest
         return [
             'title' => ['required', 'string', 'max:255'],
             'author' => ['required', 'string', 'max:255'],
-            'isbn' => ['nullable', 'string', 'max:255'],
+            'isbn' => ['nullable', 'string', 'max:255', new Isbn],
             'year' => ['nullable', 'integer', 'digits:4'],
             'genre' => ['nullable', 'string', 'max:255'],
             'collection' => ['nullable', 'string', 'max:255'],

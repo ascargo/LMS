@@ -28,6 +28,29 @@ class PatronController extends Controller
         return view('patrons.index', compact('patrons'));
     }
 
+    // Owner create form
+    public function create()
+    {
+        return view('patrons.create');
+    }
+
+    // Owner-created patron (defaults to approved)
+    public function storeFromOwner(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'email', 'unique:patrons,email'],
+            'message' => ['nullable', 'string', 'max:1000'],
+            'approved' => ['sometimes', 'boolean'],
+        ]);
+
+        $validated['approved'] = $validated['approved'] ?? true;
+
+        Patron::create($validated);
+
+        return redirect()->route('patrons.index')->with('success', 'Patron created.');
+    }
+
     // Show details of one patron
     public function show(Patron $patron)
     {

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Book;
 use App\Models\BookStatus;
+use App\Enums\BookStatusEnum;
 use App\Http\Requests\StoreBookRequest;
 use App\Http\Requests\UpdateBookRequest;
 use Illuminate\Http\Request;
@@ -15,16 +16,7 @@ class BookController extends Controller
     {
         $q = $request->string('q')->toString();
         $books = Book::with('status')
-            ->when(
-                $q,
-                fn ($query) =>
-                $query->where(
-                    fn ($sub) =>
-                    $sub->where('title', 'like', "%$q%")
-                        ->orWhere('author', 'like', "%$q%")
-                        ->orWhere('isbn', 'like', "%$q%")
-                )
-            )
+            ->search($q)
             ->latest('id')
             ->paginate(12)
             ->withQueryString();
@@ -47,7 +39,7 @@ class BookController extends Controller
         }
 
         if (!isset($data['status_id'])) {
-            $data['status_id'] = \App\Models\BookStatus::where('name', 'Available')->value('id');
+            $data['status_id'] = BookStatus::where('name', BookStatusEnum::Available->value)->value('id');
         }
 
         Book::create($data);

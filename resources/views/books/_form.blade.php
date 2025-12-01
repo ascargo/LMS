@@ -1,7 +1,7 @@
 @props(['book' => null, 'statuses'])
 
 <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md text-gray-800 dark:text-gray-100">
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div class="grid grid-cols-1 gap-6">
         <div>
             <x-input-label for="title" value="Title" />
             <x-text-input id="title" name="title" type="text"

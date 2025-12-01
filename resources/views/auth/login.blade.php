@@ -52,13 +52,22 @@
             </form>
 
             <!-- 🪴 Footer links -->
-            <p class="text-center text-sm text-primary/70 mt-6">
-                {{ __("Don’t have an account?") }}
-                <a href="{{ route('patron.request') }}"
-                    class="font-semibold text-secondary hover:text-primary transition underline underline-offset-4">
-                    {{ __('Request to Become a Patron') }}
-                </a>
-            </p>
+            <div class="text-center text-sm text-primary/70 mt-6 space-y-2">
+                <p>
+                    {{ __("Don’t have an account?") }}
+                    <a href="{{ route('register') }}"
+                        class="font-semibold text-secondary hover:text-primary transition underline underline-offset-4">
+                        {{ __('Register') }}
+                    </a>
+                </p>
+                <p>
+                    {{ __("Want to browse as a guest and request access?") }}
+                    <a href="{{ route('patron.request') }}"
+                        class="font-semibold text-secondary hover:text-primary transition underline underline-offset-4">
+                        {{ __('Become a Patron') }}
+                    </a>
+                </p>
+            </div>
         </div>
     </section>
 </x-guest-layout>

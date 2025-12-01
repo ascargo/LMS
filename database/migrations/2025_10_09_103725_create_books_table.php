@@ -20,7 +20,9 @@ return new class () extends Migration {
             $table->string('collection')->nullable();
             $table->string('location')->nullable();
             $table->string('cover_path')->nullable();
-            $table->foreignId('status_id')->constrained('book_statuses');
+            $table->foreignId('status_id')
+                ->constrained('book_statuses')
+                ->restrictOnDelete();
             $table->timestamps();
         });
     }

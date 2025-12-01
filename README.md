@@ -25,7 +25,7 @@ Category Tools
 Backend: PHP ≥ 8.1, Laravel 10
 Database: SQLite (default), MySQL (optional)
 Frontend: Blade, Tailwind CSS, HTML
-Package & Build Tools: Composer, npm (optional for assets)
+Package & Build Tools: Composer, npm (for assets)
 Dev Utilities: Artisan CLI, Git & GitHub
 
 📋 Requirements
@@ -34,7 +34,7 @@ Before starting, ensure you have:
 PHP ≥ 8.1
 Composer ≥ 2.0
 SQLite (included with PHP — no setup required)
-Node.js & npm (optional, for building frontend assets)
+Node.js & npm (for building frontend assets)
 Git (for cloning the repository)
 
 🛠️ Installation
@@ -54,18 +54,17 @@ APP_DEBUG=true
 DB_CONNECTION=sqlite
 DB_DATABASE=database/database.sqlite
 
-🧱 3. Create the SQLite database
-mkdir -p database
-touch database/database.sqlite
+🧱 3. Create the SQLite database (folder + file)
+mkdir -p database && touch database/database.sqlite
 
 🧪 4. Run migrations and seeders
 php artisan migrate:fresh --seed
 
 Expected result:
 INFO Running migrations.
-Database seeding completed successfully.
+Database seeding completed successfully. (Seeds statuses, sample books, and default user.)
 
-🧰 5. (Optional) Install frontend dependencies
+🧰 5. Install frontend dependencies
 npm install
 npm run build
 
@@ -85,6 +84,8 @@ Default login credentials:
 
 Email: test@example.com
 Password: password
+
+You can also register your own account at /register (Breeze auth). Patrons still request access via the public form.
 
 From the dashboard you can manage:
 
@@ -135,3 +136,5 @@ Never commit .env or database.sqlite files.
 Run npm audit fix regularly to keep dependencies secure.
 
 To test from a fresh clone: repeat installation steps 1–5 above.
+
+Routes are consolidated into a single authenticated group to avoid duplicate definitions that caused earlier warnings.

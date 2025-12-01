@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\BookStatus;
+use App\Enums\BookStatusEnum;
 
 class BookStatusSeeder extends Seeder
 {
@@ -13,10 +14,8 @@ class BookStatusSeeder extends Seeder
      */
     public function run(): void
     {
-        $statuses = ['Available', 'Borrowed', 'Reserved', 'Lost'];
-
-        foreach ($statuses as $status) {
-            BookStatus::firstOrCreate(['name' => $status]);
+        foreach (BookStatusEnum::cases() as $status) {
+            BookStatus::firstOrCreate(['name' => $status->value]);
         }
     }
 }

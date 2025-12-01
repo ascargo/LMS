@@ -39,6 +39,7 @@
                 @auth
                 <a href="{{ route('owner.dashboard') }}" class="hover:text-secondary transition">Dashboard</a>
                 @else
+                <a href="{{ route('register') }}" class="hover:text-secondary transition">Register</a>
                 <a href="{{ route('login') }}" class="hover:text-secondary transition">Login</a>
                 @endauth
             </nav>
